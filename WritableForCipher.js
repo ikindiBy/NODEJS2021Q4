@@ -7,7 +7,7 @@ class WritableForCipher extends Writable {
         this.filename = filename;
     }
 
-    _construct(callback) {
+    _construct(callback) { 
         fs.open(this.filename, 'a', (err, fd) => {
             if (err) {
                 callback(err);
@@ -24,9 +24,11 @@ class WritableForCipher extends Writable {
 
     _destroy(err, callback) {
         if (this.fd) {
-            fs.close(this.fd, (er) => callback(er || err));
+            fs.close(this.fd, (er) => {
+                callback(er || err)}
+                );
         } else {
-            callback(err);
+            throw new Error('Error on writing in output file.');
         }
     }
 }
