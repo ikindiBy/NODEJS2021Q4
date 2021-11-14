@@ -27,10 +27,15 @@ const getArrayOfTransformStreams = (configArray) => {
     });
 
     return arrayOfTransformStreams;
-}
+};
+
+const showError = (message) => {
+    process.stderr.write(`Smth went wrong with ${message}.`);
+};
 
 
 
 module.exports = {
     getArrayOfTransformStreams,
+    showError,
 };

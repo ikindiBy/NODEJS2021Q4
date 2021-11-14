@@ -19,7 +19,7 @@ class ReadableForCipherSource extends Readable {
         });
     }
 
-    _read(n = 128) {
+    _read(n) {
         const buf = Buffer.alloc(n);
         fs.read(this.fd, buf, 0, n, null, (err, bytesRead) => {
             if (err) {

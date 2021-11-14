@@ -12,12 +12,11 @@ const {
     SEPARATOR_IN_CONFIG,
 } = require('./cliConstants');
 
-const { getArrayOfTransformStreams } = require('./utils');
+const {
+    getArrayOfTransformStreams,
+    showError,
+} = require('./utils');
 
-const showError = (message) => {
-    process.stderr.write(`Smth went wrong with ${message}.`);
-    // console.log('Smth went wrong with ', message);
-};
 
 const args = process.argv.slice(2);
 
@@ -41,8 +40,6 @@ if (idxShortInputOption >= 0) {
     inputFile = args[idxShortInputOption + 1];
 } else if (idxLongInputOption >= 0) {
     inputFile = args[idxLongInputOption + 1];
-} else {
-    showError('input file');
 }
 
 let outputFile;
@@ -53,32 +50,19 @@ if (idxShortOutputOption >= 0) {
     outputFile = args[idxShortOutputOption + 1];
 } else if (idxLongOutputOption >= 0) {
     outputFile = args[idxLongOutputOption + 1];
-} else {
-    showError('output file');
 }
 
-if (inputFile && outputFile) {
-    const readableSource = new ReadableForCipherSource(inputFile);
-    const writableStream = new WritableForCipher(outputFile);
-    const arrayOfTransformStreams = getArrayOfTransformStreams(chainConfig);
+const readableSource = inputFile ? new ReadableForCipherSource(inputFile) : process.stdin;
+const writableStream = outputFile ? new WritableForCipher(outputFile) : process.stdout;
+const arrayOfTransformStreams = getArrayOfTransformStreams(chainConfig);
 
-    pipeline(
-        readableSource,
-        ...arrayOfTransformStreams,
-        writableStream,
-        (err) => {
-            if (err) {
-                showError('pipeline');
-            } 
-        }
-    );
-}
-
-
-
-// console.log(process.argv, chainConfig, inputFile, outputFile);
-// process.stdout.write('The end!');
-// Buffer.concat([a,b,c])
-// process.stdout
-// process.stdin
-// hightWatterMark <--> drain 
+pipeline(
+    readableSource,
+    ...arrayOfTransformStreams,
+    writableStream,
+    (err) => {
+        if (err) {
+            showError('pipeline');
+        } 
+    }
+);
