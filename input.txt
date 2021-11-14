@@ -1,7 +1,0 @@
-abcd ==== EFGHI
-bcde ---- FGHIJ
-ABCD 0000 XYZ
-
-This is secret. Message  about "_" symbol!
-
-************************
