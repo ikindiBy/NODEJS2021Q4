@@ -5,8 +5,12 @@ const LONG_INPUT_OPTION = '--input';
 const SHORT_OUTPUT_OPTION = '-o';
 const LONG_OUTPUT_OPTION = '--output';
 const SEPARATOR_IN_CONFIG = '-';
+const DECODING_FLAG = '0';
+const ENCODING_FLAG = '1';
 
 module.exports = {
+    ENCODING_FLAG,
+    DECODING_FLAG,
     SHORT_CONFIG_OPTION,
     LONG_CONFIG_OPTION,
     SHORT_INPUT_OPTION,

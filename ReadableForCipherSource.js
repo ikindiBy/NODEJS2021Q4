@@ -12,7 +12,7 @@ class ReadableForCipherSource extends Readable {
 
     _construct(cb) {
         fs.open(this.filename, (err, fd) => {
-            if (err.code === 'ENOENT') {
+            if (err?.code === 'ENOENT') {
                 const errorMessage = `no such file or directory: ${this.filename}!`;
                 throw new ExistingFileError(errorMessage);
             }

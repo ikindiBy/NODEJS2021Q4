@@ -1,6 +1,8 @@
 const { TransformForCipher } = require('./TransformForCipher');
 const { CEASER_TYPE, ATBASH_TYPE, ROT8_TYPE } = require('./cipherConstants');
 const {
+    ENCODING_FLAG,
+    DECODING_FLAG,
     SHORT_CONFIG_OPTION,
     LONG_CONFIG_OPTION,
     SHORT_INPUT_OPTION,
@@ -15,29 +17,61 @@ const showError = (area, description) => {
     process.exit(1);
 };
 
+const checkEnodingDecodingFlag = (flag) => {
+    if (!flag) {
+        showError('config', 'config should include encoding/decoding flag.');
+    }
+
+    if (flag !== ENCODING_FLAG && flag !== DECODING_FLAG) {
+        showError('config', 'config should include encoding/decoding flag like 0 or 1.');
+    }
+};
+
+
+const validateConfig = (configItem) => {
+    if (configItem[0] !== ATBASH_TYPE
+        && configItem[0] !== CEASER_TYPE
+        && configItem[0] !== ROT8_TYPE
+    ) {
+        showError('config', 'config should include only A or C or R flags.');
+    }
+
+    if (configItem.length > 2) {
+        showError('config', 'incorrect config: should include only A/C/R flags and 0/1.');
+    }
+
+    if (configItem[0] === ATBASH_TYPE && configItem.length > 1) {
+        showError('config', 'atbash config shouldn\'t include encoding/decoding flag');
+    }
+
+    if (configItem.length === 2) {
+        checkEnodingDecodingFlag(configItem[1]);
+    }
+}
+
 const getArrayOfTransformStreams = (configArray) => {
     const arrayOfTransformStreams = configArray.map(configItem => {
-        if (configItem === ATBASH_TYPE) {
+        validateConfig(configItem);
+
+        if (configItem[0] === ATBASH_TYPE) {
             return new TransformForCipher({type: ATBASH_TYPE});
         }
-    
-        if (configItem[0] === CEASER_TYPE && configItem[1] === '0') {
+
+        if (configItem[0] === CEASER_TYPE && configItem[1] === DECODING_FLAG) {
             return  new TransformForCipher({type: CEASER_TYPE, decipher: true});
         }
     
-        if (configItem[0] === CEASER_TYPE && configItem[1] === '1') {
+        if (configItem[0] === CEASER_TYPE && configItem[1] === ENCODING_FLAG) {
             return  new TransformForCipher({type: CEASER_TYPE, decipher: false});
         }
     
-        if (configItem[0] === ROT8_TYPE && configItem[1] === '0') {
+        if (configItem[0] === ROT8_TYPE && configItem[1] === DECODING_FLAG) {
             return  new TransformForCipher({type: ROT8_TYPE, decipher: true});
         }
     
-        if (configItem[0] === ROT8_TYPE && configItem[1] === '1') {
+        if (configItem[0] === ROT8_TYPE && configItem[1] === ENCODING_FLAG) {
             return  new TransformForCipher({type: ROT8_TYPE, decipher: false});
         }
-    
-        //error handling
     });
 
     return arrayOfTransformStreams;
@@ -52,9 +86,9 @@ const getChainConfig = (args) => {
     const idxShortConfigFlag = args.indexOf(SHORT_CONFIG_OPTION);
     const idxLongConfigFlag = args.indexOf(LONG_CONFIG_OPTION);
     
-    if (idxShortConfigFlag >= 0 && idxLongConfigFlag < 0) {
+    if (idxShortConfigFlag >= 0) {
         chainConfig = args[idxShortConfigFlag + 1].split(SEPARATOR_IN_CONFIG);
-    } else if (idxLongConfigFlag >= 0 && idxShortConfigFlag < 0) {
+    } else if (idxLongConfigFlag >= 0) {
         chainConfig = args[idxLongConfigFlag + 1].split(SEPARATOR_IN_CONFIG);
     } else if (idxShortConfigFlag < 0 && idxLongConfigFlag < 0){
        showError('config', 'need correct spelling');
