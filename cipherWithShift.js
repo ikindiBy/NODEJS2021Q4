@@ -4,7 +4,7 @@ const getIndexDependingOnDecipher = (shift, isDecipherMode, index) => {
     if (isDecipherMode) {
         return index >= shift ? index - shift : LAST_LETTER_INDEX - (shift - index - 1);
     } else {
-        return index <= LAST_LETTER_INDEX - shift ? index + shift : shift - 1;
+        return index <= LAST_LETTER_INDEX - shift ? index + shift : shift - (LAST_LETTER_INDEX - index) - 1;
     }
 }
 
@@ -16,6 +16,7 @@ const getShiftedEncrypted = (string, shift, decipher = false) => {
 
         if (lowerLetterIndex >= 0) {
             const newIndex = getIndexDependingOnDecipher(shift, decipher, lowerLetterIndex);
+
             return LOWER_LETTERS[newIndex];
         }
         
