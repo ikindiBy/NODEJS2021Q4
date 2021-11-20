@@ -1,5 +1,5 @@
-const { TransformForCipher } = require('./TransformForCipher');
-const { CEASER_TYPE, ATBASH_TYPE, ROT8_TYPE } = require('./cipherConstants');
+const { TransformForCipher } = require('../modules/TransformForCipher');
+const { CEASER_TYPE, ATBASH_TYPE, ROT8_TYPE } = require('../constants/cipherConstants');
 const {
     ENCODING_FLAG,
     DECODING_FLAG,
@@ -10,14 +10,14 @@ const {
     SHORT_OUTPUT_OPTION,
     LONG_OUTPUT_OPTION,
     SEPARATOR_IN_CONFIG,
-} = require('./cliConstants');
+} = require('../constants/cliConstants');
 
 const showError = (area, description) => {
     process.stderr.write(`Error in ${area}: ${description}`);
     process.exit(1);
 };
 
-const checkEnodingDecodingFlag = (flag) => {
+const checkEncodingDecodingFlag = (flag) => {
     if (!flag) {
         showError('config', 'config should include encoding/decoding flag.');
     }
@@ -45,7 +45,7 @@ const validateConfig = (configItem) => {
     }
 
     if (configItem.length === 2) {
-        checkEnodingDecodingFlag(configItem[1]);
+        checkEncodingDecodingFlag(configItem[1]);
     }
 }
 

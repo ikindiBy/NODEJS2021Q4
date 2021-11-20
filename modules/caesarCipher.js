@@ -1,4 +1,4 @@
-const { SHIFT_STEP_CEASAR } = require('./cipherConstants');
+const { SHIFT_STEP_CEASAR } = require('../constants/cipherConstants');
 const { getShiftedEncrypted } = require('./cipherWithShift');
 
 const getCaesarEncrypted = (string, decipher) => getShiftedEncrypted(string, SHIFT_STEP_CEASAR, decipher);

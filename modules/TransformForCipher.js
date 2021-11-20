@@ -3,15 +3,15 @@ const { getCaesarEncrypted } = require('./caesarCipher');
 const { getAtbashEncrypted } = require('./atbashCipher');
 const { getRot8Encrypted } = require('./rot8Cipher');
 
-const { CEASER_TYPE, ATBASH_TYPE, ROT8_TYPE } = require('./cipherConstants');
+const { CEASER_TYPE, ATBASH_TYPE, ROT8_TYPE } = require('../constants/cipherConstants');
 
 
 class TransformForCipher extends Transform {
     constructor (options = {}) {
         options = Object.assign({}, options, {
-            decodeStrings: false // for UTF8
+            decodeStrings: false
         });
-        super(); // think about items that will be passed here
+        super();
         this.params = options;
     }
 
