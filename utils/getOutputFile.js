@@ -10,7 +10,7 @@ const getOutputFile = (args) => {
 
   const outputArguments = args.filter(arg => arg === SHORT_OUTPUT_OPTION || arg === LONG_OUTPUT_OPTION);
   if (outputArguments.length > 1) {
-      showError('output file', 'should be only one argument.');
+      showError('output file', 'should be only one output argument.');
   }
 
   const idxShortOutputOption = args.indexOf(SHORT_OUTPUT_OPTION);
