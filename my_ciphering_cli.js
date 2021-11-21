@@ -9,7 +9,7 @@ const {
     getInputFile,
     getOutputFile,
     showError,
-} = require('./utils/utils');
+} = require('./utils');
 
 const args = process.argv.slice(2);
 

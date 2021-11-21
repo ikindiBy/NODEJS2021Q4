@@ -3,51 +3,15 @@ const { CEASER_TYPE, ATBASH_TYPE, ROT8_TYPE } = require('../constants/cipherCons
 const {
     ENCODING_FLAG,
     DECODING_FLAG,
-    SHORT_CONFIG_OPTION,
-    LONG_CONFIG_OPTION,
     SHORT_INPUT_OPTION,
     LONG_INPUT_OPTION,
     SHORT_OUTPUT_OPTION,
     LONG_OUTPUT_OPTION,
-    SEPARATOR_IN_CONFIG,
 } = require('../constants/cliConstants');
 
-const showError = (area, description) => {
-    process.stderr.write(`Error in ${area}: ${description}`);
-    process.exit(1);
-};
+const { showError } = require('./showError');
+const { validateConfig } = require('./validateConfig');
 
-const checkEncodingDecodingFlag = (flag) => {
-    if (!flag) {
-        showError('config', 'config should include encoding/decoding flag.');
-    }
-
-    if (flag !== ENCODING_FLAG && flag !== DECODING_FLAG) {
-        showError('config', 'config should include encoding/decoding flag like 0 or 1.');
-    }
-};
-
-
-const validateConfig = (configItem) => {
-    if (configItem[0] !== ATBASH_TYPE
-        && configItem[0] !== CEASER_TYPE
-        && configItem[0] !== ROT8_TYPE
-    ) {
-        showError('config', 'config should include only A or C or R flags.');
-    }
-
-    if (configItem.length > 2) {
-        showError('config', 'incorrect config: should include only A/C/R flags and 0/1.');
-    }
-
-    if (configItem[0] === ATBASH_TYPE && configItem.length > 1) {
-        showError('config', 'atbash config shouldn\'t include encoding/decoding flag');
-    }
-
-    if (configItem.length === 2) {
-        checkEncodingDecodingFlag(configItem[1]);
-    }
-}
 
 const getArrayOfTransformStreams = (configArray) => {
     const arrayOfTransformStreams = configArray.map(configItem => {
@@ -75,26 +39,6 @@ const getArrayOfTransformStreams = (configArray) => {
     });
 
     return arrayOfTransformStreams;
-};
-
-const getChainConfig = (args) => {
-    let chainConfig = [];
-    const configArguments = args.filter(arg => arg === SHORT_CONFIG_OPTION || arg === LONG_CONFIG_OPTION);
-    if (configArguments.length > 1) {
-        showError('config', 'should be only one config argument.');
-    }
-    const idxShortConfigFlag = args.indexOf(SHORT_CONFIG_OPTION);
-    const idxLongConfigFlag = args.indexOf(LONG_CONFIG_OPTION);
-    
-    if (idxShortConfigFlag >= 0) {
-        chainConfig = args[idxShortConfigFlag + 1].split(SEPARATOR_IN_CONFIG);
-    } else if (idxLongConfigFlag >= 0) {
-        chainConfig = args[idxLongConfigFlag + 1].split(SEPARATOR_IN_CONFIG);
-    } else if (idxShortConfigFlag < 0 && idxLongConfigFlag < 0){
-       showError('config', 'need correct spelling');
-    }
-
-    return chainConfig;
 };
 
 const getInputFile = (args) => {
@@ -140,8 +84,6 @@ const getOutputFile = (args) => {
 
 module.exports = {
     getArrayOfTransformStreams,
-    getChainConfig,
     getInputFile,
     getOutputFile,
-    showError,
 };
