@@ -1,4 +1,4 @@
-const { UPPER_LETTERS, LOWER_LETTERS, LAST_LETTER_INDEX } = require('./letters');
+const { UPPER_LETTERS, LOWER_LETTERS, LAST_LETTER_INDEX } = require('../constants/letters');
 
 const getAtbashEncrypted = (string) => {
     const preparedString = string.trim();

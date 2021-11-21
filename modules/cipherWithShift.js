@@ -1,4 +1,4 @@
-const { UPPER_LETTERS, LOWER_LETTERS, LAST_LETTER_INDEX } = require('./letters');
+const { UPPER_LETTERS, LOWER_LETTERS, LAST_LETTER_INDEX } = require('../constants/letters');
 
 const getIndexDependingOnDecipher = (shift, isDecipherMode, index) => {
     if (isDecipherMode) {
@@ -33,4 +33,4 @@ const getShiftedEncrypted = (string, shift, decipher = false) => {
     return resultLettersArray.join('');
 }
 
-module.exports = { getShiftedEncrypted };
+module.exports = { getShiftedEncrypted, getIndexDependingOnDecipher };

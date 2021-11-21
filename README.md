@@ -1,25 +1,24 @@
 # NODEJS2021Q4 
 
-TASK 1
+TASK 2
 
-CLI tool accepts 3 options (short alias and full name):
+Ссылка на задание: https://github.com/rolling-scopes-school/basic-nodejs-course/blob/master/descriptions/testing.md
+Дудлайн/сдача: 21.11.2021/21.11.2021
 
--c, --config: config for ciphers Config is a string with pattern {XY(-)}n, where:
-    X is a cipher mark:
-        C is for Caesar cipher (with shift 1)
-        A is for Atbash cipher
-        R is for ROT-8 cipher
-    Y is flag of encoding or decoding (mandatory for Caesar cipher and ROT-8 cipher and should not be passed Atbash cipher)
-        1 is for encoding
-        0 is for decoding
--i, --input: a path to input file (without this option you will have to type text in console)
--o, --output: a path to output file (without this option the result will be shown in console)
+Баллы за реализацию (самооценка)
 
-For example, config "C1-C1-R0-A" means "encode by Caesar cipher => encode by Caesar cipher => decode by ROT-8 => use Atbash"
+По плюс 2 балла за каждый юнит-тест (не более 20 баллов в сумме, баллы начисляются не более чем за 3 теста на каждую отдельную функцию/компонент). (20 баллов)
+Покрытие не менее 70% плюс 20 баллов (покрытие по строкам, вычисляется при помощи jest --coverage) (20 баллов)
+В тестах задействованы все сценарии из описания плюс 20 баллов (20 баллов) - отметил в коде комментом типа // CASE #3 from Error scenarios in task
+Для тестирования используются mock-объекты плюс 20 баллов (20 баллов)
 
-Examples of launching:
-node .\my_ciphering_cli --config C1-R1 --input "./input.txt" --output "./output.txt"
-node .\my_ciphering_cli -c C1-R1 -i "./input.txt" -o "./output.txt"
-node .\my_ciphering_cli -c C1-R1 --output "./output.txt"
-node .\my_ciphering_cli -c C1-R1 -i "./input.txt"
-node .\my_ciphering_cli -c C1-R1
+Продвинутая реализация
+Покрытие не менее 85% плюс 20 баллов (покрытие по бранчам вычисляется при помощи jest --coverage) (20 баллов)
+
+Штрафы
+Не используется Jest минус 80 баллов (0 баллов)
+Имеются коммиты после дедлайна, за исключением коммитов, изменяющих исключительно в Readme.md либо вспомогательные файлы (.gitignore, .prettierrc.json и т.д.) минус 30% от максимального балла за задание (-30 баллов) (0 баллов)
+Отсутствует PR либо его описание некорректно (отсутствуют либо некорректен любой из 3 обязательных пунктов) минус 20 баллов (0 баллов)
+Отсутствует отдельная ветка для разработки минус 20 баллов (0 баллов)
+Меньше 3 коммитов в ветке разработки, не считая коммиты, вносящие изменения только в Readme.md либо вспомогательные файлы (.gitignore, .prettierrc.json и т.д.) — минус 20 баллов (0 баллов)
+

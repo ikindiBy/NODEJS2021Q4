@@ -1,8 +1,8 @@
 
 const { pipeline } = require('stream');
 
-const { ReadableForCipherSource } = require('./ReadableForCipherSource');
-const { WritableForCipher } = require('./WritableForCipher');
+const { ReadableForCipherSource } = require('./modules/ReadableForCipherSource');
+const { WritableForCipher } = require('./modules/WritableForCipher');
 const {
     getArrayOfTransformStreams,
     getChainConfig,
