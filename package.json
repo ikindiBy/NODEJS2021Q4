@@ -4,7 +4,8 @@
   "description": "TASK 1",
   "main": "ExistingFileError.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",

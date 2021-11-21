@@ -33,4 +33,4 @@ const getShiftedEncrypted = (string, shift, decipher = false) => {
     return resultLettersArray.join('');
 }
 
-module.exports = { getShiftedEncrypted };
+module.exports = { getShiftedEncrypted, getIndexDependingOnDecipher };
