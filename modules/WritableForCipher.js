@@ -1,6 +1,8 @@
 const { Writable } = require('stream');
 const fs = require('fs');
 
+const { checkOutputFile } = require('../utils/checkOutputFile');
+
 class WritableForCipher extends Writable {
     constructor(filename) {
         super();
@@ -8,6 +10,7 @@ class WritableForCipher extends Writable {
     }
 
     _construct(callback) { 
+        checkOutputFile(this.filename);
         fs.open(this.filename, 'a', (err, fd) => {
             if (err) {
                 callback(err);

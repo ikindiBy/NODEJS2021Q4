@@ -1,8 +1,7 @@
 const { Readable } = require('stream');
 const fs = require('fs');
 
-const { ExistingFileError } = require('./ExistingFileError');
-
+const { checkInputFile } = require('../utils/checkInputFile');
 class ReadableForCipherSource extends Readable {
     constructor(filename) {
         super();
@@ -11,11 +10,8 @@ class ReadableForCipherSource extends Readable {
     }
 
     _construct(cb) {
+        checkInputFile(this.filename);
         fs.open(this.filename, (err, fd) => {
-            if (err?.code === 'ENOENT') {
-                const errorMessage = `no such file or directory: ${this.filename}!`;
-                throw new ExistingFileError(errorMessage);
-            }
             if (err) {
                 cb(err);
             } else {
